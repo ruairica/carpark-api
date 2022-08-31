@@ -16,10 +16,6 @@ namespace CarPark.Api
     {
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            var folder = Environment.SpecialFolder.LocalApplicationData;
-            var path = Environment.GetFolderPath(folder);
-            var dbPath = System.IO.Path.Join(path, "CarPark.db");
-
             var sqliteConnection = new SqliteConnection(new SqliteConnectionStringBuilder
             {
                 DataSource = this.GetType().Name,
@@ -28,7 +24,7 @@ namespace CarPark.Api
                 ForeignKeys = true,
             }.ToString());
 
-            builder.Services.AddDbContext<CarParkContext>(options => options.UseSqlite(sqliteConnection));
+            builder.Services.AddDbContext<CarParkContext>(options => options.UseSqlite(sqliteConnection).EnableSensitiveDataLogging().EnableDetailedErrors());
             builder.Services.AddLogging();
             builder.Services.AddTransient<ICarParkRepository, CarParkRepository>();
         }

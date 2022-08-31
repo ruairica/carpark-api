@@ -22,7 +22,7 @@ namespace CarPark.Api.Controller
         }
 
         [FunctionName("AmendBooking")]
-        public async Task<ActionResult<Guid>> AmendBooking([HttpTrigger(AuthorizationLevel.Function, "post", Route = "CarPark/Booking/Edit")] HttpRequest req)
+        public async Task<ActionResult<Guid>> AmendBooking([HttpTrigger(AuthorizationLevel.Function, "patch", Route = "CarPark/Booking/Edit")] HttpRequest req)
         {
             var reqModel = JsonConvert.DeserializeObject<BookingRequestEditModel>(await new StreamReader(req.Body).ReadToEndAsync());
             if (InvalidDateRange(reqModel.StartDate, reqModel.EndDate))
@@ -42,7 +42,7 @@ namespace CarPark.Api.Controller
 
         [FunctionName("CancelBooking")]
         public async Task<ActionResult<Guid>> CancelBooking(
-            [HttpTrigger(AuthorizationLevel.Function, "post", Route = "CarPark/Booking/Cancel/{id}")] HttpRequest req, Guid id)
+            [HttpTrigger(AuthorizationLevel.Function, "patch", Route = "CarPark/Booking/Cancel/{id}")] HttpRequest req, Guid id)
         {
             var result = await this._repository.CancelBooking(id);
 

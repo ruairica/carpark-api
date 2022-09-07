@@ -1,7 +1,7 @@
 # CarParkApi
 C# .NET 6 Api running built as an Azure Function App.
 
-The project use Sqlite as an in-memory database, this was used for prototyping purposes only to make it simpler for anyone to get the API running locally as quickly as possible. The database persists only as long as the application is running, however this could easily be swapped out for a SQL Server database. When running the project locally it will start on port/url: http://localhost:7192/api/
+The project use Sqlite as an in-memory database, this was used for prototyping purposes only to make it simpler for anyone to get the API running locally as quickly as possible. The database persists only as long as the application is running, however this could easily be swapped out for a SQL Server database, using EF Core for easy integration with in memory database + speed of development. When running the project locally it will start on port/url: http://localhost:7192/api/
 
 ## Requirements to run
 .NET 6 SDK
@@ -114,9 +114,12 @@ Date (DateTime) [PK]
 
 Price (Decimal)
 
-## Assumptions/Constraints
+## Assumptions/Constraints/TODO
 ###### A booking is up to an including the end date.
 ###### Users can book a parking space up to 2 years away.
+###### CarPark Api DB Design is designed to to support 10000s+ reservations, is inefficient for the set max limit of 10.
+###### A lot of DB updates should be rewritten in raw SQL as EF Core is in efficient for the updates to records when the PK of the record to update is already known.
+
 
 
 
